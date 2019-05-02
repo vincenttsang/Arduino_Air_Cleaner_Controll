@@ -23,11 +23,13 @@ int getCO2(){
 char *getCharCO2(){
     char fromFloatCO2[3];
     dtostrf(getCO2(),1,1,fromFloatCO2);
-    char *unit = " ppm";
+    const char *unit = " ppm";
     char *CO2Data = fromFloatCO2;
     char *CharCO2 = (char *) malloc(strlen(CO2Data) + strlen(unit));
     sprintf(CharCO2, "%s%s", CO2Data, unit);
     return CharCO2;
+    free(CharCO2);
+    CharCO2=NULL;
 } //转为char 带单位
 
 #include <OneWire.h>
@@ -47,25 +49,41 @@ float getFloatTemp(){
 char *getCharTemp(){
     char fromFloatTemp[3];
     dtostrf(getFloatTemp(),1,1,fromFloatTemp);
-    char *unit = " Deg.C";
+    const char *unit = " Deg.C";
     char *TempData = fromFloatTemp;
     char *CharTemp = (char *) malloc(strlen(TempData) + strlen(unit));
     sprintf(CharTemp, "%s%s", TempData, unit);
     return CharTemp;
+    free(CharTemp);
+    CharTemp=NULL;
 }//温度转换为char
 
 int sv1 = 0;
 int ov1 = 0;
 int sv2 = 0;
 int ov2 = 0;
-int GetX(){
+int getX(){
     sv1 = analogRead(A1);
     ov1 = map(sv1, 0, 1023, 0, 255);
     return ov1;
 } //X轴角度
-int GetY(){
+int getY(){
     sv2 = analogRead(A2);
     ov2 = map(sv2, 0, 1023, 0, 255);
     return ov2;
 } //Y轴角度
 //ADXL335 角度读取
+
+char fromFloatf[32];
+char *floatToChar(float f ,int precision){
+    dtostrf(f,1,precision,fromFloatf);
+    return fromFloatf;
+}//浮点转换为字符数组
+
+char *charLinker(const char *a,const char *b){
+    char *CharLink = (char *) malloc(strlen(a) + strlen(b));
+    sprintf(CharLink, "%s%s", a, b);
+    return CharLink;
+    free(CharLink);
+    CharLink=NULL;
+}//字符串拼接
