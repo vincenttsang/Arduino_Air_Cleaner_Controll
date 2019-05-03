@@ -8,14 +8,10 @@ void(* resetFunc) (void) = 0;
 
 void drawStatic(void){
   u8g.setFont(u8g_font_unifont);
-  u8g.setPrintPos(0, 20); 
-  u8g.print("Temperature: ");
-  u8g.setPrintPos(0,50);
-  u8g.print("CO2: ");
-  u8g.setPrintPos(0,80);
-  u8g.print("X-axis:");
-  u8g.setPrintPos(0,100);
-  u8g.print("Y-axis:");
+  u8g.drawStr( 0, 22, "Temperature: ");
+  u8g.drawStr( 12, 22, "CO2:");
+  u8g.drawStr( 24, 22, "X-axis:");
+  u8g.drawStr( 36, 22, "Y-axis:");
   }
   
 void draw(void) {
@@ -24,18 +20,10 @@ void draw(void) {
   Y=getY()*1.0;
   delay(15);
   u8g.setFont(u8g_font_unifont);
-  u8g.setPrintPos(30, 35);
-  u8g.print(getCharTemp());
-  delay(15);
-  u8g.setPrintPos(55,50);
-  u8g.print(getCharCO2());
-  delay(15);
-  u8g.setPrintPos(55,80);
-  u8g.print(charLinker(floatToChar(X,1)," Deg"));
-  delay(15);
-  u8g.setPrintPos(55,100);
-  u8g.print(charLinker(floatToChar(Y,1)," Deg"));
-  delay(15);
+  u8g.drawStr( 0, 50, getCharTemp());
+  u8g.drawStr( 12, 50, getCharCO2());
+  u8g.drawStr( 24, 50, (floatToChar(X,1)," Deg"));
+  u8g.drawStr( 36, 50, (floatToChar(Y,1)," Deg"));
   Serial.print("freeMemory()=");
   Serial.println(freeMemory());
   if(freeMemory()<=250){
