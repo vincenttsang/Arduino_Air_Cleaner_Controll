@@ -23,13 +23,10 @@ int getCO2(){
 char *getCharCO2(){
     char fromFloatCO2[3];
     dtostrf(getCO2(),1,1,fromFloatCO2);
-    const char *unit = " ppm";
     char *CO2Data = fromFloatCO2;
-    char *CharCO2 = (char *) malloc(strlen(CO2Data) + strlen(unit));
-    sprintf(CharCO2, "%s%s", CO2Data, unit);
+    const char *unit = " ppm";
+    char *CharCO2 = strcat(CO2Data,unit);
     return CharCO2;
-    free(CharCO2);
-    CharCO2=NULL;
 } //转为char 带单位
 
 #include <OneWire.h>
@@ -51,11 +48,8 @@ char *getCharTemp(){
     dtostrf(getFloatTemp(),1,1,fromFloatTemp);
     const char *unit = " Deg.C";
     char *TempData = fromFloatTemp;
-    char *CharTemp = (char *) malloc(strlen(TempData) + strlen(unit));
-    sprintf(CharTemp, "%s%s", TempData, unit);
+    char *CharTemp = strcat(TempData,unit);
     return CharTemp;
-    free(CharTemp);
-    CharTemp=NULL;
 }//温度转换为char
 
 int sv1 = 0;
@@ -81,9 +75,6 @@ char *floatToChar(float f ,int precision){
 }//浮点转换为字符数组
 
 char *charLinker(const char *a,const char *b){
-    char *CharLink = (char *) malloc(strlen(a) + strlen(b));
-    sprintf(CharLink, "%s%s", a, b);
+    char *CharLink = strcat(a,b);
     return CharLink;
-    free(CharLink);
-    CharLink=NULL;
 }//字符串拼接
