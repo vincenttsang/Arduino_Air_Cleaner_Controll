@@ -25,9 +25,10 @@ void draw(void) {
   float X=0,Y=0;
   X=getX()*1.0;
   Y=getY()*1.0;
+  char *Temp = getCharTemp(CharTemp);
   u8g.setFont(u8g_font_unifont);
   u8g.setPrintPos(30, 35);
-  u8g.print(getCharTemp());
+  u8g.print(Temp);
   delay(15);
   u8g.setPrintPos(55,50);
   u8g.print(getCharCO2());
@@ -38,14 +39,18 @@ void draw(void) {
   u8g.setPrintPos(55,100);
   u8g.print(charLinker(floatToChar(Y,1)," Deg"));
   delay(15);
-  Serial.print("freeMemory()=");
+  Serial.print("freeMemory() = ");
   Serial.println(freeMemory());
+  Serial.print("CO2 ppm = ");
+  Serial.println(getCO2());
+  Serial.print("Temperature = ");
+  Serial.println(Temp);
   Mem();
 }
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
+  Serial.begin(19200);
   initTemp();
 }
 

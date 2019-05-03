@@ -15,6 +15,9 @@
 #include <string.h>
 #include "MemoryFree.cpp"
 
+char *CharTemp = NULL;
+float Temp;
+
 int getCO2(){
     int sensorValue,outputValue;
     sensorValue = analogRead(A0)*(5);
@@ -39,18 +42,19 @@ void initTemp(){
     sensor_DS18B20.begin();
 } //初始化OneWire
 float getFloatTemp(){
-    int Temp;
     sensor_DS18B20.requestTemperatures();
     Temp = sensor_DS18B20.getTempCByIndex(0);
     return Temp;
 } //DS18B20 读取温度
-char *getCharTemp(){
-    char fromFloatTemp[3];
+char *getCharTemp(char *a){
+    a = NULL;
+    char fromFloatTemp[4];
+    fromFloatTemp[3] = '\0';
     dtostrf(getFloatTemp(),1,1,fromFloatTemp);
     const char *unit = " Deg.C";
     char *TempData = fromFloatTemp;
-    char *CharTemp = strcat(TempData,unit);
-    return CharTemp;
+    a = strcat(TempData,unit);
+    return a;
 }//温度转换为char
 
 int sv1 = 0;
