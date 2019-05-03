@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "MemoryFree.cpp"
 
 int getCO2(){
     int sensorValue,outputValue;
@@ -78,3 +79,11 @@ char *charLinker(const char *a,const char *b){
     char *CharLink = strcat(a,b);
     return CharLink;
 }//字符串拼接
+
+void Mem(){
+    void(* resetFunc) (void) = 0;
+    if(freeMemory()<=250){
+        delay(20);
+        resetFunc();
+    }
+}
