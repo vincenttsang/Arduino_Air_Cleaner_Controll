@@ -63,13 +63,13 @@ int sv2 = 0;
 int ov2 = 0;
 int getX(){
     sv1 = analogRead(A1);
-    ov1 = map(sv1, 0, 1023, 0, 255);
-    return ov1;
+    //ov1 = map(sv1, 0, 1023, 0, 255);
+    return sv1;
 } //X轴角度
 int getY(){
     sv2 = analogRead(A2);
-    ov2 = map(sv2, 0, 1023, 0, 255);
-    return ov2;
+    //ov2 = map(sv2, 0, 1023, 0, 255);
+    return sv2;
 } //Y轴角度
 //ADXL335 角度读取
 
