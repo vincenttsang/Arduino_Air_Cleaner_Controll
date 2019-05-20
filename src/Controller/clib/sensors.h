@@ -18,12 +18,20 @@
 char *CharTemp = NULL;
 float Temp;
 
+int getLaser(){
+    int sensorValue,outputValue;
+    sensorValue = analogRead(A3);
+    outputValue = map(sensorValue, 0, 1023, 0, 1000);
+    return outputValue;
+}
+
 int getCO2(){
     int sensorValue,outputValue;
     sensorValue = analogRead(A0)*(5);
     outputValue = map(sensorValue, 0, 2000, 350, 10000);
     return outputValue;
 } //MG811 读取并转换
+
 char *getCharCO2(){
     char fromFloatCO2[3];
     dtostrf(getCO2(),1,1,fromFloatCO2);
@@ -41,11 +49,15 @@ DallasTemperature sensor_DS18B20(&oneWire);
 void initTemp(){
     sensor_DS18B20.begin();
 } //初始化OneWire
+
 float getFloatTemp(){
     sensor_DS18B20.requestTemperatures();
     Temp = sensor_DS18B20.getTempCByIndex(0);
-    return Temp;
+    if (Temp>0.0) return Temp;
+    if (Temp== -127.0) return 25.5;
+    
 } //DS18B20 读取温度
+
 char *getCharTemp(char *a){
     a = NULL;
     char fromFloatTemp[4];
@@ -66,14 +78,17 @@ int getX(){
     //ov1 = map(sv1, 0, 1023, 0, 255);
     return sv1;
 } //X轴角度
+
 int getY(){
     sv2 = analogRead(A2);
     //ov2 = map(sv2, 0, 1023, 0, 255);
     return sv2;
 } //Y轴角度
+
 //ADXL335 角度读取
 
 char fromFloatf[32];
+
 char *floatToChar(float f ,int precision){
     dtostrf(f,1,precision,fromFloatf);
     return fromFloatf;
